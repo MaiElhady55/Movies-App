@@ -5,6 +5,7 @@ import 'package:movies_app/movies/domain/repository/base_movie_repository.dart';
 import 'package:movies_app/movies/domain/usecases/get_movie_details.dart';
 import 'package:movies_app/movies/domain/usecases/get_now_playing_movies.dart';
 import 'package:movies_app/movies/domain/usecases/get_popular_movies.dart';
+import 'package:movies_app/movies/domain/usecases/get_recommendation_movies.dart';
 import 'package:movies_app/movies/domain/usecases/get_top_rated_movies.dart';
 import 'package:movies_app/movies/presentation/controller/bloc/movie_details_bloc.dart';
 import 'package:movies_app/movies/presentation/controller/bloc/movies_bloc.dart';
@@ -15,12 +16,13 @@ class ServiceLocator {
   static void init() {
     //Bloc
     getIt.registerFactory(() => MoviesBloc(getIt(), getIt(), getIt()));
-    getIt.registerFactory(() => MovieDetailsBloc(getIt()));
+    getIt.registerFactory(() => MovieDetailsBloc(getIt(),getIt()));
     //Use Case
     getIt.registerLazySingleton(() => GetNowPlayingMovies(getIt()));
     getIt.registerLazySingleton(() => GetPopularMovies(getIt()));
     getIt.registerLazySingleton(() => GetTopRatedMovies(getIt()));
     getIt.registerLazySingleton(() => GetMovieDetails(getIt()));
+    getIt.registerLazySingleton(() => GetRecommendationMovies(getIt())); 
 
     //Repository
     getIt.registerLazySingleton<BaseMovieRepository>(
