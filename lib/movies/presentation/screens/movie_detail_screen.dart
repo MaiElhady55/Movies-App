@@ -4,11 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movies_app/core/network/api_constance.dart';
 import 'package:movies_app/core/services/service_locator.dart';
+import 'package:movies_app/core/utils/app_strings.dart';
 import 'package:movies_app/core/utils/enum.dart';
 import 'package:movies_app/core/utils/recommendation_dummy.dart';
 import 'package:movies_app/movies/domain/entities/genres.dart';
-import 'package:movies_app/movies/domain/entities/movie_details.dart';
-import 'package:movies_app/movies/domain/entities/recommendation.dart';
 import 'package:movies_app/movies/presentation/controller/bloc/movie_details_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -77,7 +76,7 @@ class MovieDetailContent extends StatelessWidget {
                               fit: BoxFit.cover,
                               width: MediaQuery.of(context).size.width,
                               image: NetworkImage(ApiConstance.imageUrl(state
-                                  .movieDetails!
+                                  .movieDetail!
                                   .backdropPath))) /*CachedNetworkImage(
                     width: MediaQuery.of(context).size.width,
                     imageUrl: ApiConstance.imageUrl(movie.backdropPath),
@@ -96,7 +95,7 @@ class MovieDetailContent extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(state.movieDetails!.title,
+                          Text(state.movieDetail!.title,
                               style: GoogleFonts.poppins(
                                 fontSize: 23,
                                 fontWeight: FontWeight.w700,
@@ -115,7 +114,7 @@ class MovieDetailContent extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(4.0),
                                 ),
                                 child: Text(
-                                  state.movieDetails!.releaseDate.split('-')[0],
+                                  state.movieDetail!.releaseDate.split('-')[0],
                                   style: const TextStyle(
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w500,
@@ -132,7 +131,7 @@ class MovieDetailContent extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 4.0),
                                   Text(
-                                    (state.movieDetails!.voteAverage / 2)
+                                    (state.movieDetail!.voteAverage / 2)
                                         .toStringAsFixed(1),
                                     style: const TextStyle(
                                       fontSize: 16.0,
@@ -142,7 +141,7 @@ class MovieDetailContent extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 4.0),
                                   Text(
-                                    '(${state.movieDetails!.voteAverage})',
+                                    '(${state.movieDetail!.voteAverage})',
                                     style: const TextStyle(
                                       fontSize: 1.0,
                                       fontWeight: FontWeight.w500,
@@ -153,7 +152,7 @@ class MovieDetailContent extends StatelessWidget {
                               ),
                               const SizedBox(width: 16.0),
                               Text(
-                                _showDuration(state.movieDetails!.runtime),
+                                _showDuration(state.movieDetail!.runtime),
                                 style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 16.0,
@@ -165,7 +164,7 @@ class MovieDetailContent extends StatelessWidget {
                           ),
                           const SizedBox(height: 20.0),
                           Text(
-                            state.movieDetails!.overview,
+                            state.movieDetail!.overview,
                             style: const TextStyle(
                               fontSize: 14.0,
                               fontWeight: FontWeight.w400,
@@ -174,7 +173,7 @@ class MovieDetailContent extends StatelessWidget {
                           ),
                           const SizedBox(height: 8.0),
                           Text(
-                            'Genres: ${_showGenres(state.movieDetails!.genres)}',
+                            '${AppString.genres}: ${_showGenres(state.movieDetail!.genres)}',
                             style: const TextStyle(
                               color: Colors.white70,
                               fontSize: 12.0,
@@ -193,9 +192,9 @@ class MovieDetailContent extends StatelessWidget {
                     child: FadeInUp(
                       from: 20,
                       duration: const Duration(milliseconds: 500),
-                      child: Text(
-                        'More like this'.toUpperCase(),
-                        style: const TextStyle(
+                      child:const Text(
+                        AppString.moreLikeThis,
+                        style:  TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1.2,
@@ -212,7 +211,7 @@ class MovieDetailContent extends StatelessWidget {
               ],
             );
           case RequestState.error:
-            return Center(child: Text(state.message));
+            return Center(child: Text(state.movieDetailsMessage));
         }
       },
     );
@@ -248,7 +247,7 @@ class MovieDetailContent extends StatelessWidget {
         return SliverGrid(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              final recommendation = state.recommendation![index];
+              final recommendation = state.recommendation[index];
               return FadeInUp(
                 from: 20,
                 duration: const Duration(milliseconds: 500),
@@ -294,4 +293,17 @@ class MovieDetailContent extends StatelessWidget {
       },
     );
   }
-}
+}  
+
+
+  /*
+   FadeInImage(
+                              placeholder:
+                                  const AssetImage('assets/images/load.gif'),
+                              fit: BoxFit.cover,
+                              width: MediaQuery.of(context).size.width,
+                              image: NetworkImage(ApiConstance.imageUrl(state
+                                  .movieDetails!
+                                  .backdropPath)))
+  
+   */

@@ -1,46 +1,48 @@
 part of 'movie_details_bloc.dart';
 
 class MovieDetailsState extends Equatable {
-  final MovieDetails? movieDetails;
+  const MovieDetailsState({
+    this.movieDetail,
+    this.movieDetailsState = RequestState.loading,
+    this.movieDetailsMessage = '',
+    this.recommendation = const [],
+    this.recommendationState = RequestState.loading,
+    this.recommendationMessage = '',
+  });
+
+  final MovieDetails? movieDetail;
   final RequestState movieDetailsState;
-  final String message;
-  final List<Recommendation>? recommendation;
+  final String movieDetailsMessage;
+  final List<Recommendation> recommendation;
   final RequestState recommendationState;
   final String recommendationMessage;
 
-  const MovieDetailsState(
-      {this.movieDetails,
-      this.movieDetailsState = RequestState.loading,
-      this.message = '',
-      this.recommendation,
-      this.recommendationState = RequestState.loading,
-      this.recommendationMessage = ''});
+  MovieDetailsState copyWith({
+    MovieDetails? movieDetail,
+    RequestState? movieDetailsState,
+    String? movieDetailsMessage,
+    List<Recommendation>? recommendation,
+    RequestState? recommendationState,
+    String? recommendationMessage,
+  }) {
+    return MovieDetailsState(
+      movieDetail: movieDetail ?? this.movieDetail,
+      movieDetailsState: movieDetailsState ?? this.movieDetailsState,
+      movieDetailsMessage: movieDetailsMessage ?? this.movieDetailsMessage,
+      recommendation: recommendation ?? this.recommendation,
+      recommendationState: recommendationState ?? this.recommendationState,
+      recommendationMessage:
+          recommendationMessage ?? this.recommendationMessage,
+    );
+  }
 
   @override
-  List<Object> get props => [
-        movieDetails!,
+  List<Object?> get props => [
+        movieDetail,
         movieDetailsState,
-        message,
-        recommendation!,
+        movieDetailsMessage,
+        recommendation,
         recommendationState,
-        recommendationMessage
+        recommendationMessage,
       ];
-
-  MovieDetailsState copyWith(
-      {MovieDetails? movieDetails,
-      RequestState? movieDetailsState,
-      String? message,
-      List<Recommendation>? recommendation,
-      RequestState? recommendationState,
-      String? recommendationMessage}) {
-    return MovieDetailsState(
-        movieDetails: movieDetails ?? this.movieDetails,
-        movieDetailsState: movieDetailsState ?? this.movieDetailsState,
-        message: message ?? this.message,
-        recommendation: recommendation ?? this.recommendation,
-        recommendationState: recommendationState ?? this.recommendationState,
-        recommendationMessage:
-            recommendationMessage ?? this.recommendationMessage);
-  }
 }
-//class MovieDetailsInitial extends MovieDetailsState {}

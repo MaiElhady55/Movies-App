@@ -26,20 +26,19 @@ class MovieDetailsBloc extends Bloc<MovieDetailsEvent, MovieDetailsState> {
         await getMovieDetails(MovieDetailsParameters(movieId: event.id));
     result.fold(
         (l) => emit(state.copyWith(
-            message: l.message, movieDetailsState: RequestState.error)),
+            movieDetailsMessage: l.message, movieDetailsState: RequestState.error)),
         (r) => emit(state.copyWith(
-            movieDetails: r, movieDetailsState: RequestState.loaded)));
+            movieDetail: r, movieDetailsState: RequestState.loaded)));
   }
 
-  FutureOr<void> _getRecommendation(GetMovieRecommendationEvent event,
-      Emitter<MovieDetailsState> emit) async {
-    final result =
+  FutureOr<void> _getRecommendation(GetMovieRecommendationEvent event, Emitter<MovieDetailsState> emit) async{
+   final result =
         await getRecommendationMovies(RecommendationParameters(id: event.id));
     result.fold(
         (l) => emit(state.copyWith(
-            recommendationMessage: l.message,
-            recommendationState: RequestState.error)),
+            recommendationMessage: l.message, recommendationState: RequestState.error)),
         (r) => emit(state.copyWith(
             recommendation: r, recommendationState: RequestState.loaded)));
+
   }
 }
