@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/network/api_constance.dart';
 import 'package:movies_app/core/utils/enum.dart';
 import 'package:movies_app/movies/presentation/controller/bloc/movies_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TopRatedComponent extends StatelessWidget {
   const TopRatedComponent({super.key});
@@ -39,16 +41,7 @@ class TopRatedComponent extends StatelessWidget {
                           child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(8.0)),
-                              child: FadeInImage(
-                                placeholder:
-                                    const AssetImage('assets/images/load.gif'),
-                                width: 120,
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                  ApiConstance.imageUrl(movie.backdropPath),
-                                ),
-                              )
-                              /*CachedNetworkImage(
+                              child: CachedNetworkImage(
                               width: 120.0,
                               fit: BoxFit.cover,
                               imageUrl: ApiConstance.imageUrl(movie.backdropPath),
@@ -66,7 +59,7 @@ class TopRatedComponent extends StatelessWidget {
                               ),
                               errorWidget: (context, url, error) =>
                                   const Icon(Icons.error),
-                            ),*/
+                            ),
                               ),
                         ),
                       );

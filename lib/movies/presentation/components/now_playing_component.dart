@@ -6,8 +6,7 @@ import 'package:movies_app/core/network/api_constance.dart';
 import 'package:movies_app/core/utils/enum.dart';
 import 'package:movies_app/movies/presentation/controller/bloc/movies_bloc.dart';
 import 'package:movies_app/movies/presentation/screens/movie_detail_screen.dart';
-
-//import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class NowPlayngComponent extends StatelessWidget {
   const NowPlayngComponent({super.key});
@@ -65,28 +64,12 @@ class NowPlayngComponent extends StatelessWidget {
                                 );
                               },
                               blendMode: BlendMode.dstIn,
-                              child: Image(
-                                height: 560.0,
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                  ApiConstance.imageUrl(item.backdropPath),
-                                ),
-                              )
-                              /*FadeInImage(
-                            placeholder:
-                                const AssetImage('assets/images/load.gif'),
-                            height: 560.0,
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                              ApiConstance.imageUrl(item.backdropPath),
-                            ),
-                          )*/
-                              /*CachedNetworkImage(
+                              child: CachedNetworkImage(
                                 height: 560.0,
                                 imageUrl:
                                     ApiConstance.imageUrl(item.backdropPath),
                                 fit: BoxFit.cover,
-                              ),*/
+                              ),
                               ),
                           Align(
                             alignment: Alignment.bottomCenter,

@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -192,9 +193,9 @@ class MovieDetailContent extends StatelessWidget {
                     child: FadeInUp(
                       from: 20,
                       duration: const Duration(milliseconds: 500),
-                      child:const Text(
+                      child: const Text(
                         AppString.moreLikeThis,
-                        style:  TextStyle(
+                        style: TextStyle(
                           fontSize: 16.0,
                           fontWeight: FontWeight.w500,
                           letterSpacing: 1.2,
@@ -252,33 +253,28 @@ class MovieDetailContent extends StatelessWidget {
                 from: 20,
                 duration: const Duration(milliseconds: 500),
                 child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(4.0)),
-                    child: FadeInImage(
-                        placeholder: const AssetImage('assets/images/load.gif'),
-                        fit: BoxFit.cover,
-                        height: 180,
-                        image: NetworkImage(
-                          ApiConstance.imageUrl(recommendation.backdropPath!),
-                        ))
-                    /*CachedNetworkImage(
-                  imageUrl: ApiConstance.imageUrl(recommendation.backdropPath!),
-                  placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey[850]!,
-                    highlightColor: Colors.grey[800]!,
-                    child: Container(
-                      height: 170.0,
-                      width: 120.0,
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: const BorderRadius.all(Radius.circular(4.0)),
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        ApiConstance.imageUrl(recommendation.backdropPath!),
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[850]!,
+                      highlightColor: Colors.grey[800]!,
+                      child: Container(
+                        height: 170.0,
+                        width: 120.0,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                       ),
                     ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    height: 180.0,
+                    fit: BoxFit.cover,
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  height: 180.0,
-                  fit: BoxFit.cover,
-                ),*/
-                    ),
+                ),
               );
             },
             childCount: recommendationDummy.length,
@@ -293,17 +289,4 @@ class MovieDetailContent extends StatelessWidget {
       },
     );
   }
-}  
-
-
-  /*
-   FadeInImage(
-                              placeholder:
-                                  const AssetImage('assets/images/load.gif'),
-                              fit: BoxFit.cover,
-                              width: MediaQuery.of(context).size.width,
-                              image: NetworkImage(ApiConstance.imageUrl(state
-                                  .movieDetails!
-                                  .backdropPath)))
-  
-   */
+}
